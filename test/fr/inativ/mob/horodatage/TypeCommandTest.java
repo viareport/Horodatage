@@ -112,4 +112,43 @@ public class TypeCommandTest {
 		result = query.getByIdAndDate(createdEvent.id, now, eventStore);
 		Assert.assertNull(result);
 	}
+
+	@Test
+	public void test_chronology_stats() {
+		Instant beforeYesterday = Instant.now().minus(Duration.ofDays(2));
+		TimeMachine.useFixedClockAt(beforeYesterday);
+		CreatedTypeEvent createdEvent = TypeCommand.create("toto");
+		eventStore.store(createdEvent);
+
+		// TODO type -> id
+		Instant yesterday = Instant.now().minus(Duration.ofDays(1));
+		TimeMachine.useFixedClockAt(yesterday);
+		TranslatedTypeEvent translatedEvent = TypeCommand.translate(createdEvent.type, "Label");
+		eventStore.store(translatedEvent);
+
+		// TODO type -> id
+		Instant now = Instant.now();
+		TimeMachine.useSystemDefaultZoneClock();
+		ArchivedTypeEvent archivedTypeEvent = TypeCommand.archive(createdEvent.type);
+		eventStore.store(archivedTypeEvent);
+
+		// Au commencement ...
+		StatsProjection result = StatsQuery.getByDate(beforeYesterday, eventStore);
+		Assert.assertNotNull(result);
+		Assert.assertEquals(1, result.nbCreation);
+		Assert.assertEquals(0, result.nbModification);
+		Assert.assertEquals(0, result.nbSuppression);
+
+		// Puis ...
+		result = StatsQuery.getByDate(yesterday, eventStore);
+		Assert.assertEquals(1, result.nbCreation);
+		Assert.assertEquals(1, result.nbModification);
+		Assert.assertEquals(0, result.nbSuppression);
+
+		// Et enfin ...
+		result = StatsQuery.getByDate(now, eventStore);
+		Assert.assertEquals(1, result.nbCreation);
+		Assert.assertEquals(1, result.nbModification);
+		Assert.assertEquals(1, result.nbSuppression);
+	}
 }

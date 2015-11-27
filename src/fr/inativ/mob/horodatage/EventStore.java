@@ -16,7 +16,10 @@ public class EventStore {
 
 	void store(Event event) {
 		this.store.add(event);
+		// TODO Idéalement on devrait avoir plusieurs ProjectionHandler et
+		// appeler leur méthode 'notify'
 		this.projector.notify(event);
+		this.projector.notifyStats(event);
 	}
 
 	public void register(ProjectionHandler projector) {
@@ -28,6 +31,7 @@ public class EventStore {
 	}
 
 	public List<Event> getEventsUntil(Instant date) {
-		return store.stream().filter(event -> event.date.equals(date) || event.date.isBefore(date)).collect(Collectors.toList());
+		return store.stream().filter(event -> event.date.equals(date) || event.date.isBefore(date))
+				.collect(Collectors.toList());
 	}
 }

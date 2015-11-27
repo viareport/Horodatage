@@ -57,4 +57,40 @@ public class ProjectionHandler {
 		return calculatedProjection;
 	}
 
+	public static StatsProjection notifyStats(Event event) {
+		StatsProjection calculatedProjection = new StatsProjection();
+		if (event instanceof CreatedTypeEvent) {
+			calculatedProjection.nbCreation = 1;
+		}
+
+		if (event instanceof TranslatedTypeEvent) {
+			calculatedProjection = StatsQuery.get();
+			calculatedProjection.nbModification++;
+		}
+
+		if (event instanceof ArchivedTypeEvent) {
+			calculatedProjection = StatsQuery.get();
+			calculatedProjection.nbSuppression++;
+		}
+		return calculatedProjection;
+	}
+
+	public static StatsProjection processStats(Event event, StatsProjection current) {
+		StatsProjection calculatedProjection = new StatsProjection();
+		if (event instanceof CreatedTypeEvent) {
+			calculatedProjection.nbCreation = 1;
+		}
+
+		if (event instanceof TranslatedTypeEvent) {
+			calculatedProjection = current;
+			calculatedProjection.nbModification++;
+		}
+
+		if (event instanceof ArchivedTypeEvent) {
+			calculatedProjection = current;
+			calculatedProjection.nbSuppression++;
+		}
+		return calculatedProjection;
+	}
+
 }
