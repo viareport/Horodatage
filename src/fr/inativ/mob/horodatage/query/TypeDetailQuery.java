@@ -35,7 +35,7 @@ public class TypeDetailQuery implements EventHandler<Event> {
 
     public TypeDetailProjection getByIdAndDate(UUID id, Instant date) {
         TypeDetailProjection current = null;
-        for (Event event : EventStore.get().getEventsUntil(date)) {
+        for (Event event : EventStore.get().getEventsUntil(id, date)) {
             current = projector.process(current, event);
         }
         return current;

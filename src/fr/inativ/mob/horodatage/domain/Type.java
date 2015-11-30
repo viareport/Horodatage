@@ -34,7 +34,7 @@ public class Type {
         }
 
         if (evt instanceof ArchivedTypeEvent) {
-            this.archived = false;
+            this.archived = true;
         }
     }
 

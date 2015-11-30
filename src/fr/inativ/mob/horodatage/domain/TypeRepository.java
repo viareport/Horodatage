@@ -1,6 +1,5 @@
 package fr.inativ.mob.horodatage.domain;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class TypeRepository {
     public Type findById(UUID id) {
         Type found = null;
         if (!memDb.containsKey(id)) {
-            found = replay(id, EventStore.get().getEventsUntil(TimeMachine.now()));
+            found = replay(EventStore.get().getEventsUntil(id, TimeMachine.now()));
             memDb.put(id, found);
         }
         return memDb.get(id);
@@ -35,13 +34,11 @@ public class TypeRepository {
         memDb.put(type.id, type);
     }
 
-    private Type replay(UUID id, Collection<Event> events) {
+    private Type replay(Iterable<Event> events) {
         Type type = new Type();
 
-        if (!events.isEmpty()) {
-            for (Event evt : events) {
-                type.apply(evt);
-            }
+        for (Event evt : events) {
+            type.apply(evt);
         }
         return type;
     }

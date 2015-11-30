@@ -22,6 +22,9 @@ public class TypeCommand {
 
     public static ArchivedTypeEvent archive(UUID typeId) {
         Type existingType = TypeRepository.get().findById(typeId);
+        if (existingType.archived) {
+            throw new UnsupportedOperationException("Cannot archive same type twice");
+        }
         existingType.archived = true;
         TypeRepository.get().save(existingType);
 
