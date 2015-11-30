@@ -1,6 +1,8 @@
-package fr.inativ.mob.horodatage;
+package fr.inativ.mob.horodatage.event;
 
 import java.util.UUID;
+
+import fr.inativ.mob.horodatage.Event;
 
 public class TranslatedTypeEvent extends Event{
 	public final String label;

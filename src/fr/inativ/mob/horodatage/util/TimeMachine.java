@@ -1,4 +1,4 @@
-package fr.inativ.mob.horodatage;
+package fr.inativ.mob.horodatage.util;
 
 import java.time.Clock;
 import java.time.Instant;
