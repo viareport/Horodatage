@@ -2,9 +2,9 @@ package fr.inativ.mob.horodatage.query;
 
 import fr.inativ.mob.horodatage.Event;
 import fr.inativ.mob.horodatage.Projector;
-import fr.inativ.mob.horodatage.event.ArchivedTypeEvent;
-import fr.inativ.mob.horodatage.event.CreatedTypeEvent;
-import fr.inativ.mob.horodatage.event.TranslatedTypeEvent;
+import fr.inativ.mob.horodatage.domain.ArchivedTypeEvent;
+import fr.inativ.mob.horodatage.domain.CreatedTypeEvent;
+import fr.inativ.mob.horodatage.domain.TranslatedTypeEvent;
 
 class StatsProjector implements Projector<Event, StatsProjection> {
 

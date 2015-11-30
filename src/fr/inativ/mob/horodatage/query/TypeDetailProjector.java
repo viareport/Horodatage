@@ -2,9 +2,9 @@ package fr.inativ.mob.horodatage.query;
 
 import fr.inativ.mob.horodatage.Event;
 import fr.inativ.mob.horodatage.Projector;
-import fr.inativ.mob.horodatage.event.ArchivedTypeEvent;
-import fr.inativ.mob.horodatage.event.CreatedTypeEvent;
-import fr.inativ.mob.horodatage.event.TranslatedTypeEvent;
+import fr.inativ.mob.horodatage.domain.ArchivedTypeEvent;
+import fr.inativ.mob.horodatage.domain.CreatedTypeEvent;
+import fr.inativ.mob.horodatage.domain.TranslatedTypeEvent;
 
 class TypeDetailProjector implements Projector<Event, TypeDetailProjection> {
 
@@ -14,9 +14,9 @@ class TypeDetailProjector implements Projector<Event, TypeDetailProjection> {
         if (evt instanceof CreatedTypeEvent) {
             calculatedProjection = new TypeDetailProjection();
             CreatedTypeEvent createdTypeEvent = (CreatedTypeEvent) evt;
-            calculatedProjection.code = createdTypeEvent.type.code;
-            calculatedProjection.id = createdTypeEvent.type.id;
-            calculatedProjection.libelle = createdTypeEvent.type.label;
+            calculatedProjection.code = createdTypeEvent.code;
+            calculatedProjection.id = createdTypeEvent.id;
+            calculatedProjection.libelle = createdTypeEvent.label;
             calculatedProjection.creation = createdTypeEvent.date;
         }
 

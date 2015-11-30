@@ -1,4 +1,4 @@
-package fr.inativ.mob.horodatage.event;
+package fr.inativ.mob.horodatage.domain;
 
 import java.util.UUID;
 

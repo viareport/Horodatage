@@ -9,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.inativ.mob.horodatage.command.TypeCommand;
-import fr.inativ.mob.horodatage.event.ArchivedTypeEvent;
-import fr.inativ.mob.horodatage.event.CreatedTypeEvent;
-import fr.inativ.mob.horodatage.event.TranslatedTypeEvent;
+import fr.inativ.mob.horodatage.domain.CreatedTypeEvent;
 import fr.inativ.mob.horodatage.query.StatsProjection;
 import fr.inativ.mob.horodatage.query.StatsQuery;
 import fr.inativ.mob.horodatage.query.TypeDetailProjection;
@@ -53,7 +51,7 @@ public class TypeTest {
         CreatedTypeEvent createdEvent = TypeCommand.create("toto");
 
         // TODO type -> id
-        TranslatedTypeEvent translatedEvent = TypeCommand.translate(createdEvent.type, "Label");
+        TypeCommand.translate(createdEvent.id, "Label");
 
         TypeDetailProjection result = TypeDetailQuery.get().getById(createdEvent.id);
 
@@ -69,7 +67,7 @@ public class TypeTest {
         CreatedTypeEvent createdEvent = TypeCommand.create("toto");
 
         // TODO type -> id
-        ArchivedTypeEvent archivedTypeEvent = TypeCommand.archive(createdEvent.type);
+        TypeCommand.archive(createdEvent.id);
 
         TypeDetailProjection result = TypeDetailQuery.get().getById(createdEvent.id);
 
@@ -85,12 +83,12 @@ public class TypeTest {
         // TODO type -> id
         Instant yesterday = Instant.now().minus(Duration.ofDays(1));
         TimeMachine.useFixedClockAt(yesterday);
-        TranslatedTypeEvent translatedEvent = TypeCommand.translate(createdEvent.type, "Label");
+        TypeCommand.translate(createdEvent.id, "Label");
 
         // TODO type -> id
         Instant now = Instant.now();
         TimeMachine.useSystemDefaultZoneClock();
-        ArchivedTypeEvent archivedTypeEvent = TypeCommand.archive(createdEvent.type);
+        TypeCommand.archive(createdEvent.id);
 
         // Au commencement ...
         TypeDetailProjection result = TypeDetailQuery.get().getByIdAndDate(createdEvent.id, beforeYesterday);
@@ -121,12 +119,12 @@ public class TypeTest {
         // TODO type -> id
         Instant yesterday = Instant.now().minus(Duration.ofDays(1));
         TimeMachine.useFixedClockAt(yesterday);
-        TranslatedTypeEvent translatedEvent = TypeCommand.translate(createdEvent.type, "Label");
+        TypeCommand.translate(createdEvent.id, "Label");
 
         // TODO type -> id
         Instant now = Instant.now();
         TimeMachine.useSystemDefaultZoneClock();
-        ArchivedTypeEvent archivedTypeEvent = TypeCommand.archive(createdEvent.type);
+        TypeCommand.archive(createdEvent.id);
 
         // Au commencement ...
         StatsProjection result = StatsQuery.get().getByDate(beforeYesterday);
