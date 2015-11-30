@@ -2,8 +2,6 @@ package fr.inativ.mob.horodatage.domain;
 
 import java.util.UUID;
 
-import fr.inativ.mob.horodatage.Event;
-
 public class Type {
     public UUID id;
     public String code;
@@ -20,7 +18,7 @@ public class Type {
         this.id = UUID.randomUUID();
     }
 
-    void apply(Event evt) {
+    /*void apply(Event evt) {
         if (evt instanceof CreatedTypeEvent) {
             CreatedTypeEvent createdTypeEvent = (CreatedTypeEvent) evt;
             this.code = createdTypeEvent.code;
@@ -36,6 +34,6 @@ public class Type {
         if (evt instanceof ArchivedTypeEvent) {
             this.archived = true;
         }
-    }
+    }*/
 
 }

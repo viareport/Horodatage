@@ -1,10 +1,10 @@
 package fr.inativ.mob.horodatage.domain;
 
-import java.util.UUID;
-
 import fr.inativ.mob.horodatage.Event;
 
-public class TranslatedTypeEvent extends Event{
+import java.util.UUID;
+
+public class TranslatedTypeEvent extends Event<Type>{
 	public final String label;
 
 	public TranslatedTypeEvent(UUID id, String label) {
@@ -12,4 +12,8 @@ public class TranslatedTypeEvent extends Event{
 		this.label = label;
 	}
 
+	@Override
+	public void process(Type type) {
+		type.label = this.label;
+	}
 }

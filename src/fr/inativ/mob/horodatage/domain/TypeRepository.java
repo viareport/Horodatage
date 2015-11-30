@@ -1,12 +1,12 @@
 package fr.inativ.mob.horodatage.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import fr.inativ.mob.horodatage.Event;
 import fr.inativ.mob.horodatage.util.EventStore;
 import fr.inativ.mob.horodatage.util.TimeMachine;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class TypeRepository {
     private static final TypeRepository INSTANCE = new TypeRepository();
@@ -38,7 +38,7 @@ public class TypeRepository {
         Type type = new Type();
 
         for (Event evt : events) {
-            type.apply(evt);
+            evt.process(type);
         }
         return type;
     }

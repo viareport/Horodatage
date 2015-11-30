@@ -1,12 +1,17 @@
 package fr.inativ.mob.horodatage.domain;
 
-import java.util.UUID;
-
 import fr.inativ.mob.horodatage.Event;
 
-public class ArchivedTypeEvent extends Event {
+import java.util.UUID;
+
+public class ArchivedTypeEvent extends Event<Type> {
     public ArchivedTypeEvent(UUID id) {
         super(id);
+    }
+
+    @Override
+    public void process(Type type) {
+        type.archived = true;
     }
 
 }
