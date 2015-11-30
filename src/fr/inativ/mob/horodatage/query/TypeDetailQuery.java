@@ -24,7 +24,6 @@ public class TypeDetailQuery implements EventHandler<Event> {
     }
 
     public TypeDetailProjection getById(UUID id) {
-        TypeDetailProjection typeProjection = ACTUAL_PROJECTIONS.get(id);
         return ACTUAL_PROJECTIONS.get(id);
     }
 

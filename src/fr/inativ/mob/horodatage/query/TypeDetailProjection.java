@@ -12,13 +12,6 @@ public class TypeDetailProjection implements Projection {
 	public Instant creation;
 	public Instant lastModification;
 
-	public TypeDetailProjection(UUID id, String code, String libelle) {
-		super();
-		this.id = id;
-		this.code = code;
-		this.libelle = libelle;
-	}
-
 	public TypeDetailProjection() {
 	}
 }
