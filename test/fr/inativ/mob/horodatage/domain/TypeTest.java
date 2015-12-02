@@ -1,17 +1,17 @@
 package fr.inativ.mob.horodatage.domain;
 
-import fr.inativ.mob.horodatage.util.EventSourcingTestRule;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.UUID;
+import fr.inativ.mob.horodatage.util.EventSourcingTestRule;
 
 public class TypeTest {
     @Rule
     public EventSourcingTestRule evtSrc = new EventSourcingTestRule();
 
-    @Test
     public void test_new_type_is_immatriculated() {
         // GIVEN
         Type type = new Type("");
@@ -38,7 +38,7 @@ public class TypeTest {
         Type type = new Type();
 
         // WHEN
-        new CreatedTypeEvent(id, "toto", "leLabel").process(type);
+        type.apply(new CreatedTypeEvent(id, "toto", "leLabel"));
 
         // THEN
         Assert.assertEquals(id, type.id);
@@ -53,7 +53,7 @@ public class TypeTest {
         Type type = new Type("");
 
         // WHEN
-        new TranslatedTypeEvent(type.id, "leLabel").process(type);
+        type.apply(new TranslatedTypeEvent(type.id, "leLabel"));
 
         // THEN
         Assert.assertEquals("leLabel", type.label);
@@ -65,7 +65,7 @@ public class TypeTest {
         Type type = new Type("");
 
         // WHEN
-        new ArchivedTypeEvent(type.id).process(type);
+        type.apply(new ArchivedTypeEvent(type.id));
 
         // THEN
         Assert.assertTrue(type.archived);

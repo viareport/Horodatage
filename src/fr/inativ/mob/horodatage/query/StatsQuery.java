@@ -21,7 +21,7 @@ public class StatsQuery implements EventHandler<Event> {
     }
 
     public StatsProjection getByDate(Instant date) {
-        StatsProjection current = null;
+        StatsProjection current = new StatsProjection();
         for (Event evt : EventStore.get().getEventsUntil(date)) {
             current = projector.process(current, evt);
         }

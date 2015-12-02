@@ -2,6 +2,8 @@ package fr.inativ.mob.horodatage.domain;
 
 import java.util.UUID;
 
+import fr.inativ.mob.horodatage.Event;
+
 public class Type {
     public UUID id;
     public String code;
@@ -18,22 +20,25 @@ public class Type {
         this.id = UUID.randomUUID();
     }
 
-    /*void apply(Event evt) {
-        if (evt instanceof CreatedTypeEvent) {
-            CreatedTypeEvent createdTypeEvent = (CreatedTypeEvent) evt;
-            this.code = createdTypeEvent.code;
-            this.id = createdTypeEvent.id;
-            this.label = createdTypeEvent.label;
-        }
+    void apply(Event evt) {
+        evt.accept(new TypeEventVisitor<Type>(this) {
+            @Override
+            public void visitForCreate(CreatedTypeEvent e) {
+                visited.code = e.code;
+                visited.id = e.id;
+                visited.label = e.label;
+            }
 
-        if (evt instanceof TranslatedTypeEvent) {
-            TranslatedTypeEvent translatedEvent = (TranslatedTypeEvent) evt;
-            this.label = translatedEvent.label;
-        }
+            @Override
+            public void visitForArchive(ArchivedTypeEvent e) {
+                visited.archived = true;
+            }
 
-        if (evt instanceof ArchivedTypeEvent) {
-            this.archived = true;
-        }
-    }*/
+            @Override
+            public void visitForTranslate(TranslatedTypeEvent e) {
+                visited.label = e.label;
+            }
+        });
 
+    }
 }

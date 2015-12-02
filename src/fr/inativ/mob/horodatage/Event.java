@@ -1,11 +1,11 @@
 package fr.inativ.mob.horodatage;
 
-import fr.inativ.mob.horodatage.util.TimeMachine;
-
 import java.time.Instant;
 import java.util.UUID;
 
-public abstract class Event<T> {
+import fr.inativ.mob.horodatage.util.TimeMachine;
+
+public abstract class Event<V extends EventVisitor<?>> {
     public final Instant date;
     public final UUID id;
 
@@ -14,5 +14,5 @@ public abstract class Event<T> {
         this.date = TimeMachine.now();
     }
 
-    public abstract void process(T object);
+    public abstract void accept(V visitor);
 }
